@@ -33,6 +33,20 @@ ActiveAdmin.register Availability do
     actions
   end
 
+  csv do
+    column "id" do |availability|
+      availability[:user_id]
+    end
+    column "email" do |availability|
+      User.find(availability[:user_id]).email
+    end
+    column :day
+    column :start_time
+    column :end_time
+    column :updated_at
+    column :created_at
+  end
+
   filter :user_id, as: :select, collection: proc { User.volunteers.order(email: :asc).pluck(:email, :id) }
   filter :day
   filter :start_time
